@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Лаборатори 03: Форм загварчлал (CSS)</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ===================== ТОЛГОЙ ХЭСЭГ ===================== -->
+  <header class="site-header">
+    <h1 class="site-title">Оюутны Бүртгэлийн Портал</h1>
+    <nav class="main-nav">
+      <ul class="nav-list">
+        <li><a class="nav-link" href="../index.html">Нүүр</a></li>
+        <li><a class="nav-link" href="#anket">Анкет засах</a></li>
+        <li><a class="nav-link" href="#">Тусламж</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===================== ҮНДСЭН КОНТЕНТ ===================== -->
+  <main class="page-main">
+
+    <!-- Анкетын хэсэг -->
+    <article id="anket" class="card">
+
+      <!-- position: relative/absolute жишээ: badge + tooltip -->
+      <h2 class="section-title badge-wrapper">
+        Хэрэглэгчийн Анкет Бөглөх
+        <span class="badge" tabindex="0">
+          Шинэ
+          <span class="tooltip">2026 оны хичээлийн жилийн шинэчилсэн анкет</span>
+        </span>
+      </h2>
+
+      <p class="section-desc">Доорх формын дагуу мэдээллээ бүрэн, үнэн зөв зааж
+        бөглөнө үү. <span class="required-note">Од (*)</span> тэмдэгтэй талбарууд
+        заавал бөглөгдөх ёстой.</p>
+
+      <form class="reg-form" action="#" method="POST" enctype="multipart/form-data">
+
+        <!-- 1-р бүлэг: Хувийн мэдээлэл -->
+        <fieldset class="field-group">
+          <legend class="group-title">Хувийн мэдээлэл</legend>
+
+          <label class="field-label" for="fullname">Овог нэр: <span class="required-note">*</span></label>
+          <input class="field-input" type="text" id="fullname" name="fullname"
+                 placeholder="И. Болдбаатар" required minlength="2">
+
+          <label class="field-label" for="email">Цахим хаяг (Email): <span class="required-note">*</span></label>
+          <input class="field-input" type="email" id="email" name="email"
+                 placeholder="example@domain.com" required>
+
+          <label class="field-label" for="password">Нууц үг: <span class="required-note">*</span></label>
+          <input class="field-input" type="password" id="password" name="password"
+                 required minlength="6" placeholder="Дор хаяж 6 тэмдэгт">
+
+          <label class="field-label" for="phone">Утасны дугаар: <span class="required-note">*</span></label>
+          <input class="field-input" type="tel" id="phone" name="phone" pattern="[0-9]{8}"
+                 placeholder="88112233" required
+                 title="Утасны дугаар яг 8 оронтой цифр байх ёстой">
+
+          <label class="field-label" for="dob">Төрсөн огноо: <span class="required-note">*</span></label>
+          <input class="field-input" type="date" id="dob" name="dob" required>
+
+          <label class="field-label">Хүйс:</label>
+          <div class="radio-row">
+            <input class="field-radio" type="radio" id="male" name="gender" value="male">
+            <label for="male">Эрэгтэй</label>
+            <input class="field-radio" type="radio" id="female" name="gender" value="female">
+            <label for="female">Эмэгтэй</label>
+          </div>
+        </fieldset>
+
+        <!-- 2-р бүлэг: Боловсрол ба сонирхол -->
+        <fieldset class="field-group">
+          <legend class="group-title">Боловсрол ба Сонирхол</legend>
+
+          <label class="field-label" for="degree">Суралцаж буй түвшин: <span class="required-note">*</span></label>
+          <select class="field-input" id="degree" name="degree" required>
+            <option value="">-- Сонгоно уу --</option>
+            <option value="bachelor">Бакалавр</option>
+            <option value="master">Магистр</option>
+            <option value="doctor">Докторант</option>
+          </select>
+
+          <label class="field-label">Сонирхож буй технологиуд:</label>
+          <div class="checkbox-row">
+            <input class="field-checkbox" type="checkbox" id="html" name="skills" value="HTML">
+            <label for="html">HTML5 / CSS3</label>
+
+            <input class="field-checkbox" type="checkbox" id="js" name="skills" value="JavaScript">
+            <label for="js">JavaScript</label>
+
+            <input class="field-checkbox" type="checkbox" id="php" name="skills" value="PHP">
+            <label for="php">PHP &amp; MySQL</label>
+          </div>
+
+          <label class="field-label" for="avatar">Профайл зураг оруулна уу:</label>
+          <input class="field-input field-file" type="file" id="avatar" name="avatar" accept="image/*">
+
+          <label class="field-label" for="bio">Товч танилцуулга / Өөрийн тухай:</label>
+          <textarea class="field-input field-textarea" id="bio" name="bio" rows="4"
+                    placeholder="Өөрийн танилцуулгыг энд бичнэ үү..."></textarea>
+        </fieldset>
+
+        <!-- Илгээх ба Арилгах товчлуурууд -->
+        <div class="form-actions">
+          <button class="btn btn-submit" type="submit">Анкет Илгээх</button>
+          <button class="btn btn-reset" type="reset">Дахин эхлүүлэх</button>
+        </div>
+      </form>
+    </article>
+
+    <!-- Сонирхлын жагсаалт -->
+    <section class="card">
+      <h2 class="section-title">Миний сонирхол</h2>
+      <ul class="interest-list">
+        <li>Веб хөгжүүлэлт</li>
+        <li>Фото зураг авах</li>
+        <li>Кино үзэх</li>
+      </ul>
+    </section>
+
+    <!-- Дүнгийн хүснэгт -->
+    <section class="card">
+      <h2 class="section-title">Миний дүн</h2>
+      <table class="grades-table">
+        <thead>
+          <tr>
+            <th>Хичээл</th>
+            <th>Дүн</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Веб зохиомж</td>
+            <td>95</td>
+          </tr>
+          <tr>
+            <td>Мэдээллийн сан</td>
+            <td>88</td>
+          </tr>
+          <tr>
+            <td>Алгоритм</td>
+            <td>92</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- ===================== ХӨЛ ХЭСЭГ ===================== -->
+  <footer class="site-footer">
+    <p>&copy; 2026 Веб зохиомж хичээл. Бүх эрх хуулиар хамгаалагдсан.</p>
+  </footer>
+
+</body>
+</html>
