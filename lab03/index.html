@@ -4,18 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Лаборатори 03: Форм загварчлал (CSS)</title>
-
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 
-  <!-- External CSS -->
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-  <!-- ===================== ТОЛГОЙ ХЭСЭГ ===================== -->
   <header class="site-header">
     <h1 class="site-title">Оюутны Бүртгэлийн Портал</h1>
     <nav class="main-nav">
@@ -27,13 +22,8 @@
     </nav>
   </header>
 
-  <!-- ===================== ҮНДСЭН КОНТЕНТ ===================== -->
   <main class="page-main">
-
-    <!-- Анкетын хэсэг -->
     <article id="anket" class="card">
-
-      <!-- position: relative/absolute жишээ: badge + tooltip -->
       <h2 class="section-title badge-wrapper">
         Хэрэглэгчийн Анкет Бөглөх
         <span class="badge" tabindex="0">
@@ -47,8 +37,6 @@
         заавал бөглөгдөх ёстой.</p>
 
       <form class="reg-form" action="#" method="POST" enctype="multipart/form-data">
-
-        <!-- 1-р бүлэг: Хувийн мэдээлэл -->
         <fieldset class="field-group">
           <legend class="group-title">Хувийн мэдээлэл</legend>
 
@@ -80,8 +68,6 @@
             <label for="female">Эмэгтэй</label>
           </div>
         </fieldset>
-
-        <!-- 2-р бүлэг: Боловсрол ба сонирхол -->
         <fieldset class="field-group">
           <legend class="group-title">Боловсрол ба Сонирхол</legend>
 
@@ -112,16 +98,12 @@
           <textarea class="field-input field-textarea" id="bio" name="bio" rows="4"
                     placeholder="Өөрийн танилцуулгыг энд бичнэ үү..."></textarea>
         </fieldset>
-
-        <!-- Илгээх ба Арилгах товчлуурууд -->
         <div class="form-actions">
           <button class="btn btn-submit" type="submit">Анкет Илгээх</button>
           <button class="btn btn-reset" type="reset">Дахин эхлүүлэх</button>
         </div>
       </form>
     </article>
-
-    <!-- Сонирхлын жагсаалт -->
     <section class="card">
       <h2 class="section-title">Миний сонирхол</h2>
       <ul class="interest-list">
@@ -130,8 +112,6 @@
         <li>Кино үзэх</li>
       </ul>
     </section>
-
-    <!-- Дүнгийн хүснэгт -->
     <section class="card">
       <h2 class="section-title">Миний дүн</h2>
       <table class="grades-table">
@@ -160,7 +140,6 @@
 
   </main>
 
-  <!-- ===================== ХӨЛ ХЭСЭГ ===================== -->
   <footer class="site-footer">
     <p>&copy; 2026 Веб зохиомж хичээл. Бүх эрх хуулиар хамгаалагдсан.</p>
   </footer>
