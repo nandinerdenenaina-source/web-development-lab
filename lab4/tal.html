@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Тал нутгийн аялал — Лаб 4</title>
+<style>
+  :root {
+    --ink: #16222e;
+    --sky: #2c5f8a;
+    --steppe: #5f7f45;
+    --saffron: #e0a526;
+    --paper: #f1f4f6;
+    --card: #ffffff;
+    --line: #d3dbe0;
+    --muted: #55636f;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #e8eef2; --paper: #121a21; --card: #1b2630;
+      --line: #2c3a46; --muted: #9aaab6; --sky: #6aa5d1; --steppe: #93b36f;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #e8eef2; --paper: #121a21; --card: #1b2630;
+    --line: #2c3a46; --muted: #9aaab6; --sky: #6aa5d1; --steppe: #93b36f;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", "Noto Sans", Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--paper);
+  }
+  a { color: inherit; }
+  a:focus-visible { outline: 3px solid var(--saffron); outline-offset: 2px; }
+  img, svg { max-width: 100%; }
+
+  .page {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "header" "nav" "main" "sidebar" "footer";
+    min-height: 100vh;
+    gap: 0;
+  }
+  .site-header { grid-area: header; }
+  .site-nav    { grid-area: nav; }
+  .content     { grid-area: main; }
+  .sidebar     { grid-area: sidebar; }
+  .site-footer { grid-area: footer; }
+
+  .wrap { width: min(1180px, 100% - 2rem); margin-inline: auto; }
+
+  .site-header { background: var(--sky); color: #fff; padding: 2rem 0; }
+  .site-header .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+  }
+  .site-header h1 { margin: 0; font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.1; }
+  .site-header p { margin: .25rem 0 0; opacity: .9; max-width: 42ch; }
+  .badge {
+    background: var(--saffron); color: #16222e; font-weight: 700;
+    padding: .4rem .9rem; border-radius: 999px; font-size: .9rem;
+  }
+
+  .site-nav { background: var(--ink); position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; }
+  :root[data-theme="dark"] .site-nav { background: #0b1117; }
+  .site-nav .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: .5rem 1rem;
+  }
+  .nav-links { display: flex; flex-wrap: wrap; gap: .25rem; list-style: none; margin: 0; padding: 0; }
+  .nav-links a {
+    display: block; padding: .85rem 1rem; color: #e8eef2; text-decoration: none;
+    border-bottom: 3px solid transparent;
+  }
+  .nav-links a:hover, .nav-links a[aria-current="page"] { border-bottom-color: var(--saffron); }
+  .nav-search {
+    display: flex; align-items: center; gap: .5rem; padding: .5rem 0;
+  }
+  .nav-search input {
+    padding: .45rem .8rem; border: 1px solid #44566a; border-radius: 6px;
+    background: #22313f; color: #fff; min-width: 0; width: 11rem; font: inherit;
+  }
+  .nav-search button {
+    padding: .45rem 1rem; border: 0; border-radius: 6px; background: var(--saffron);
+    color: #16222e; font-weight: 700; cursor: pointer; font: inherit; font-weight: 700;
+  }
+
+  .content, .sidebar { padding: 2rem 1rem; }
+  .content > *, .sidebar > * { max-width: 100%; }
+  .section-title {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 1rem; margin: 0 0 1.25rem; padding-bottom: .6rem;
+    border-bottom: 2px solid var(--line);
+  }
+  .section-title h2 { margin: 0; font-size: 1.5rem; }
+  .section-title a { color: var(--sky); font-size: .95rem; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  .card {
+    display: flex; flex-direction: column;
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    overflow: hidden;
+  }
+  .card-media {
+    display: flex; align-items: center; justify-content: center;
+    aspect-ratio: 16 / 9; font-size: 2.6rem; color: #fff;
+  }
+  .m1 { background: #c9953a; } .m2 { background: var(--steppe); } .m3 { background: var(--sky); }
+  .m4 { background: #7a5c8a; } .m5 { background: #3f7f7a; } .m6 { background: #a5543f; }
+  .card-body { display: flex; flex-direction: column; flex: 1; gap: .5rem; padding: 1rem 1.1rem 1.2rem; }
+  .card h3 { margin: 0; font-size: 1.1rem; }
+  .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+  .card-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: auto; padding-top: .75rem; font-size: .85rem; color: var(--muted);
+  }
+  .card-meta a { color: var(--sky); font-weight: 600; }
+
+  .card.featured { grid-column: span 2; flex-direction: row; }
+  .card.featured .card-media { aspect-ratio: auto; flex: 0 0 42%; }
+
+  .sidebar { display: grid; gap: 1.25rem; align-content: start; }
+  .widget { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 1.1rem 1.2rem; }
+  .widget h2 { margin: 0 0 .75rem; font-size: 1.1rem; }
+  .widget ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .1rem; }
+  .widget li a {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: .5rem 0; border-bottom: 1px dashed var(--line); text-decoration: none;
+  }
+  .widget li a:hover { color: var(--sky); }
+  .count { background: var(--paper); border-radius: 999px; padding: 0 .6rem; font-size: .8rem; color: var(--muted); }
+  .tags { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .tags a {
+    padding: .25rem .75rem; border: 1px solid var(--line); border-radius: 999px;
+    font-size: .85rem; text-decoration: none;
+  }
+  .tags a:hover { background: var(--saffron); color: #16222e; border-color: var(--saffron); }
+
+  .site-footer { background: var(--ink); color: #cdd8df; padding: 2.5rem 0 1.5rem; margin-top: 1rem; }
+  :root[data-theme="dark"] .site-footer { background: #0b1117; }
+  .footer-cols { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; }
+  .footer-cols h2 { color: #fff; font-size: 1rem; margin: 0 0 .6rem; }
+  .footer-cols p { margin: 0; max-width: 40ch; }
+  .footer-cols ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .3rem; }
+  .copy {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem;
+    margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #33444f; font-size: .85rem;
+  }
+
+  @media (min-width: 900px) {
+    .page {
+      grid-template-columns: minmax(0, 1fr) 300px;
+      grid-template-areas:
+        "header  header"
+        "nav     nav"
+        "main    sidebar"
+        "footer  footer";
+      column-gap: 2rem;
+    }
+    .content { padding-left: max(1rem, calc((100vw - 1180px) / 2)); }
+    .sidebar { padding-right: max(1rem, calc((100vw - 1180px) / 2)); }
+  }
+  @media (max-width: 1099px) { .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 899px) { .footer-cols { grid-template-columns: 1fr 1fr; } .footer-cols > :first-child { grid-column: 1 / -1; } }
+  @media (max-width: 640px) {
+    .card-grid { grid-template-columns: minmax(0, 1fr); }
+    .card.featured { grid-column: auto; flex-direction: column; }
+    .card.featured .card-media { flex: none; aspect-ratio: 16 / 9; }
+    .nav-search { width: 100%; }
+    .nav-search input { flex: 1; width: auto; }
+    .footer-cols { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="site-header">
+    <div class="wrap">
+      <div>
+        <h1>Тал нутгийн аялал</h1>
+        <p>Монголын говь, хангай, хээрээр хийх аяллын зам, зөвлөгөө, түүхүүд.</p>
+      </div>
+      <span class="badge">2026 зуны аяллууд нээлттэй</span>
+    </div>
+  </header>
+
+  <nav class="site-nav" aria-label="Үндсэн цэс">
+    <div class="wrap">
+      <ul class="nav-links">
+        <li><a href="#" aria-current="page">Нүүр</a></li>
+        <li><a href="#">Чиглэлүүд</a></li>
+        <li><a href="#">Зөвлөгөө</a></li>
+        <li><a href="#">Галерей</a></li>
+        <li><a href="#">Холбоо барих</a></li>
+      </ul>
+      <form class="nav-search" role="search" onsubmit="return false">
+        <input type="search" placeholder="Чиглэл хайх" aria-label="Хайх">
+        <button type="submit">Хайх</button>
+      </form>
+    </div>
+  </nav>
+
+  <main class="content">
+    <div class="section-title">
+      <h2>Онцлох чиглэлүүд</h2>
+      <a href="#">Бүгдийг харах</a>
+    </div>
+
+    <section class="card-grid" aria-label="Аяллын чиглэлүүд">
+      <article class="card featured">
+        <div class="card-media m1" aria-hidden="true">🏜️</div>
+        <div class="card-body">
+          <h3>Хонгорын элс — Говийн сонгодог маршрут</h3>
+          <p>Улаанбаатараас 5 өдрийн аялал. Дуулалт элс, Баянзаг, Гурван сайхан уул дамнана.</p>
+          <div class="card-meta"><span>5 өдөр · 1,250 км</span><a href="#">Дэлгэрэнгүй</a></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-media m2" aria-hidden="true">🌿</div>
+        <div class="card-body">
+          <h3>Орхон хөндий</h3>
+          <p>Хайрхан уулын бэл, Улаан цутгалан хүрсэн хөнгөн маршрут.</p>
+          <div class="card-meta"><span>3 өдөр</span><a href="#">Дэлгэрэнгүй</a></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-media m3" aria-hidden="true">🏞️</div>
+        <div class="card-body">
+          <h3>Хөвсгөл нуур</h3>
+          <p>Далай эхийн эрэг дагуу морин аялал, завь, загасчлал.</p>
+          <div class="card-meta"><span>6 өдөр</span><a href="#">Дэлгэрэнгүй</a></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-media m4" aria-hidden="true">⛰️</div>
+        <div class="card-body">
+          <h3>Алтайн таван богд</h3>
+          <p>Цасан нурууны бэлд хоёр шөнө майхан буудаллана.</p>
+          <div class="card-meta"><span>8 өдөр</span><a href="#">Дэлгэрэнгүй</a></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-media m5" aria-hidden="true">🐎</div>
+        <div class="card-body">
+          <h3>Тэрэлж — Хан Хэнтий</h3>
+          <p>Хотоос ойр, амралтын хэвийн аялал, гэр бүлд тохиромжтой.</p>
+          <div class="card-meta"><span>2 өдөр</span><a href="#">Дэлгэрэнгүй</a></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-media m6" aria-hidden="true">🌅</div>
+        <div class="card-body">
+          <h3>Дорнодын тал</h3>
+          <p>Дэлхийн хамгийн том үргэлжилсэн хээрийн нэг, ширэнгэн шувуу ажиглалт.</p>
+          <div class="card-meta"><span>7 өдөр</span><a href="#">Дэлгэрэнгүй</a></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <aside class="sidebar" aria-label="Нэмэлт мэдээлэл">
+    <section class="widget">
+      <h2>Ангилал</h2>
+      <ul>
+        <li><a href="#">Говь <span class="count">12</span></a></li>
+        <li><a href="#">Хангай <span class="count">9</span></a></li>
+        <li><a href="#">Нуур, гол <span class="count">7</span></a></li>
+        <li><a href="#">Морин аялал <span class="count">5</span></a></li>
+      </ul>
+    </section>
+    <section class="widget">
+      <h2>Сүүлийн зөвлөгөө</h2>
+      <ul>
+        <li><a href="#">Майхны сонголт</a></li>
+        <li><a href="#">Зам дээрх хоол</a></li>
+        <li><a href="#">Аяллын даатгал</a></li>
+      </ul>
+    </section>
+    <section class="widget">
+      <h2>Шошго</h2>
+      <div class="tags">
+        <a href="#">майхан</a><a href="#">хээр</a><a href="#">нуур</a>
+        <a href="#">зураг авалт</a><a href="#">гэр бүл</a>
+      </div>
+    </section>
+  </aside>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-cols">
+        <section>
+          <h2>Тал нутгийн аялал</h2>
+          <p>Монголын байгальд хариуцлагатай аялах хүмүүст зориулсан сурах бичиг, маршрутын сан.</p>
+        </section>
+        <nav aria-label="Footer цэс">
+          <h2>Цэс</h2>
+          <ul><li><a href="#">Чиглэлүүд</a></li><li><a href="#">Зөвлөгөө</a></li><li><a href="#">Галерей</a></li></ul>
+        </nav>
+        <section>
+          <h2>Холбоо барих</h2>
+          <ul><li>info@talnutag.mn</li><li>+976 7700 0000</li><li>Улаанбаатар хот</li></ul>
+        </section>
+      </div>
+      <div class="copy">
+        <span>© 2026 Тал нутгийн аялал</span>
+        <span>Лаб 4 · Flexbox ба Grid</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
