@@ -1,0 +1,23 @@
+.tabbar { display: none; }
+
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .site-nav { position: static; }
+
+  .tabbar {
+    display: flex;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+    background: var(--card);
+    border-top: 1px solid var(--line);
+    padding: .4rem .5rem calc(.4rem + env(safe-area-inset-bottom, 0px));
+  }
+  .tabbar a {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    gap: 2px; padding: .35rem 0; font-size: .7rem;
+    color: var(--muted); text-decoration: none;
+  }
+  .tabbar a span { font-size: 1.3rem; }
+  .tabbar a[aria-current="page"] { color: var(--sky); font-weight: 700; }
+
+  body { padding-bottom: 5rem; }
+}

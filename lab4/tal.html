@@ -8,6 +8,8 @@
   :root {
     --ink: #16222e;
     --sky: #2c5f8a;
+    --hero: #2c5f8a;      /* header-ийн дэвсгэр: dark mode дээр ч харанхуй хэвээр */
+    --bar: #16222e;       /* цэс, footer-ийн дэвсгэр: dark mode дээр ч харанхуй хэвээр */
     --steppe: #5f7f45;
     --saffron: #e0a526;
     --paper: #f1f4f6;
@@ -22,11 +24,13 @@
     :root:not([data-theme="light"]) {
       --ink: #e8eef2; --paper: #121a21; --card: #1b2630;
       --line: #2c3a46; --muted: #9aaab6; --sky: #6aa5d1; --steppe: #93b36f;
+      --bar: #0b1117;
     }
   }
   :root[data-theme="dark"] {
     --ink: #e8eef2; --paper: #121a21; --card: #1b2630;
     --line: #2c3a46; --muted: #9aaab6; --sky: #6aa5d1; --steppe: #93b36f;
+    --bar: #0b1117;
   }
   *, *::before, *::after { box-sizing: border-box; }
   html { scroll-padding-top: env(safe-area-inset-top, 0px); }
@@ -56,7 +60,7 @@
 
   .wrap { width: min(1180px, 100% - 2rem); margin-inline: auto; }
 
-  .site-header { background: var(--sky); color: #fff; padding: 2rem 0; }
+  .site-header { background: var(--hero); color: #fff; padding: 2rem 0; }
   .site-header .wrap {
     display: flex;
     flex-wrap: wrap;
@@ -71,8 +75,7 @@
     padding: .4rem .9rem; border-radius: 999px; font-size: .9rem;
   }
 
-  .site-nav { background: var(--ink); position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; }
-  :root[data-theme="dark"] .site-nav { background: #0b1117; }
+  .site-nav { background: var(--bar); position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; }
   .site-nav .wrap {
     display: flex;
     flex-wrap: wrap;
@@ -93,6 +96,7 @@
     padding: .45rem .8rem; border: 1px solid #44566a; border-radius: 6px;
     background: #22313f; color: #fff; min-width: 0; width: 11rem; font: inherit;
   }
+  .nav-search input::placeholder { color: #9aaab6; }
   .nav-search button {
     padding: .45rem 1rem; border: 0; border-radius: 6px; background: var(--saffron);
     color: #16222e; font-weight: 700; cursor: pointer; font: inherit; font-weight: 700;
@@ -153,8 +157,7 @@
   }
   .tags a:hover { background: var(--saffron); color: #16222e; border-color: var(--saffron); }
 
-  .site-footer { background: var(--ink); color: #cdd8df; padding: 2.5rem 0 1.5rem; margin-top: 1rem; }
-  :root[data-theme="dark"] .site-footer { background: #0b1117; }
+  .site-footer { background: var(--bar); color: #cdd8df; padding: 2.5rem 0 1.5rem; margin-top: 1rem; }
   .footer-cols { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; }
   .footer-cols h2 { color: #fff; font-size: 1rem; margin: 0 0 .6rem; }
   .footer-cols p { margin: 0; max-width: 40ch; }
@@ -164,6 +167,10 @@
     margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #33444f; font-size: .85rem;
   }
 
+  /* Гар утасны доод tab bar: desktop дээр нуугдана */
+  .tabbar { display: none; }
+
+  /* Desktop: 2 багана */
   @media (min-width: 900px) {
     .page {
       grid-template-columns: minmax(0, 1fr) 300px;
@@ -177,15 +184,63 @@
     .content { padding-left: max(1rem, calc((100vw - 1180px) / 2)); }
     .sidebar { padding-right: max(1rem, calc((100vw - 1180px) / 2)); }
   }
+
+  /* Tablet */
   @media (max-width: 1099px) { .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 899px) { .footer-cols { grid-template-columns: 1fr 1fr; } .footer-cols > :first-child { grid-column: 1 / -1; } }
+  @media (max-width: 899px) {
+    .footer-cols { grid-template-columns: 1fr 1fr; }
+    .footer-cols > :first-child { grid-column: 1 / -1; }
+  }
+
+  /* Гар утас / апп */
   @media (max-width: 640px) {
     .card-grid { grid-template-columns: minmax(0, 1fr); }
     .card.featured { grid-column: auto; flex-direction: column; }
     .card.featured .card-media { flex: none; aspect-ratio: 16 / 9; }
+    .footer-cols { grid-template-columns: 1fr; }
+    .site-header { padding: 1.25rem 0; }
+
+    /* дээд цэсийн линкүүдийг нууж, хайлтыг үлдээнэ */
+    .nav-links { display: none; }
+    .site-nav { position: static; }
     .nav-search { width: 100%; }
     .nav-search input { flex: 1; width: auto; }
-    .footer-cols { grid-template-columns: 1fr; }
+    .nav-search input, .nav-search button { min-height: 44px; }
+
+    /* ангилал: хөндлөн гүйлгэдэг chip */
+    .widget.categories ul {
+      display: flex; gap: .5rem;
+      overflow-x: auto; scroll-snap-type: x proximity;
+      padding-bottom: .25rem;
+    }
+    .widget.categories li { flex: 0 0 auto; }
+    .widget.categories li a {
+      border: 1px solid var(--line); border-radius: 999px;
+      padding: .4rem .9rem; white-space: nowrap;
+    }
+
+    /* хуруугаар дарахад тохиромжтой хэмжээ */
+    .widget li a, .tags a { min-height: 44px; }
+    .tags a { display: inline-flex; align-items: center; }
+
+    /* доод tab bar */
+    .tabbar {
+      display: flex;
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+      background: var(--card);
+      border-top: 1px solid var(--line);
+      padding: .4rem .5rem calc(.4rem + env(safe-area-inset-bottom, 0px));
+    }
+    .tabbar a {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      gap: 2px; padding: .35rem 0; min-height: 44px;
+      font-size: .7rem; color: var(--muted); text-decoration: none;
+    }
+    .tabbar a span { font-size: 1.3rem; line-height: 1.2; }
+    .tabbar a[aria-current="page"] { color: var(--sky); font-weight: 700; }
+
+    /* tab bar контентыг халхлахгүй */
+    body { padding-bottom: 5rem; }
   }
 </style>
 </head>
@@ -282,7 +337,7 @@
   </main>
 
   <aside class="sidebar" aria-label="Нэмэлт мэдээлэл">
-    <section class="widget">
+    <section class="widget categories">
       <h2>Ангилал</h2>
       <ul>
         <li><a href="#">Говь <span class="count">12</span></a></li>
@@ -330,6 +385,14 @@
       </div>
     </div>
   </footer>
+
+  <nav class="tabbar" aria-label="Апп цэс">
+    <a href="#" aria-current="page"><span>🏠</span>Нүүр</a>
+    <a href="#"><span>🧭</span>Чиглэл</a>
+    <a href="#"><span>💡</span>Зөвлөгөө</a>
+    <a href="#"><span>🖼️</span>Галерей</a>
+    <a href="#"><span>✉️</span>Холбоо</a>
+  </nav>
 
 </div>
 </body>
