@@ -8,8 +8,8 @@
   :root {
     --ink: #16222e;
     --sky: #2c5f8a;
-    --hero: #2c5f8a;      /* header-ийн дэвсгэр: dark mode дээр ч харанхуй хэвээр */
-    --bar: #16222e;       /* цэс, footer-ийн дэвсгэр: dark mode дээр ч харанхуй хэвээр */
+    --hero: #2c5f8a;
+    --bar: #16222e;
     --steppe: #5f7f45;
     --saffron: #e0a526;
     --paper: #f1f4f6;
@@ -167,10 +167,8 @@
     margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #33444f; font-size: .85rem;
   }
 
-  /* Гар утасны доод tab bar: desktop дээр нуугдана */
   .tabbar { display: none; }
 
-  /* Desktop: 2 багана */
   @media (min-width: 900px) {
     .page {
       grid-template-columns: minmax(0, 1fr) 300px;
@@ -185,14 +183,12 @@
     .sidebar { padding-right: max(1rem, calc((100vw - 1180px) / 2)); }
   }
 
-  /* Tablet */
   @media (max-width: 1099px) { .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 899px) {
     .footer-cols { grid-template-columns: 1fr 1fr; }
     .footer-cols > :first-child { grid-column: 1 / -1; }
   }
 
-  /* Гар утас / апп */
   @media (max-width: 640px) {
     .card-grid { grid-template-columns: minmax(0, 1fr); }
     .card.featured { grid-column: auto; flex-direction: column; }
@@ -200,14 +196,12 @@
     .footer-cols { grid-template-columns: 1fr; }
     .site-header { padding: 1.25rem 0; }
 
-    /* дээд цэсийн линкүүдийг нууж, хайлтыг үлдээнэ */
     .nav-links { display: none; }
     .site-nav { position: static; }
     .nav-search { width: 100%; }
     .nav-search input { flex: 1; width: auto; }
     .nav-search input, .nav-search button { min-height: 44px; }
 
-    /* ангилал: хөндлөн гүйлгэдэг chip */
     .widget.categories ul {
       display: flex; gap: .5rem;
       overflow-x: auto; scroll-snap-type: x proximity;
@@ -219,11 +213,9 @@
       padding: .4rem .9rem; white-space: nowrap;
     }
 
-    /* хуруугаар дарахад тохиромжтой хэмжээ */
     .widget li a, .tags a { min-height: 44px; }
     .tags a { display: inline-flex; align-items: center; }
 
-    /* доод tab bar */
     .tabbar {
       display: flex;
       position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
@@ -239,7 +231,6 @@
     .tabbar a span { font-size: 1.3rem; line-height: 1.2; }
     .tabbar a[aria-current="page"] { color: var(--sky); font-weight: 700; }
 
-    /* tab bar контентыг халхлахгүй */
     body { padding-bottom: 5rem; }
   }
 </style>
