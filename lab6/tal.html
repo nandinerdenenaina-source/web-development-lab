@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Зургийн цомог портал — Лаб 6</title>
+<style>
+:root{
+  --ink:#16222e; --paper:#f1f4f6; --card:#fff; --line:#d3dbe0; --muted:#55636f;
+  --brand:#2c5f8a; --accent:#e0a526; --bar:#16222e;
+
+  --t-fast:.2s; --t-base:.4s; --t-flip:.7s; --stagger:90ms; --ease:cubic-bezier(.2,.7,.2,1);
+
+  --r-sm:6px; --r-md:12px; --r-pill:999px;
+  --shadow:0 2px 6px rgb(0 0 0/.08); --shadow-up:0 14px 28px rgb(0 0 0/.18);
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--ink:#e8eef2;--paper:#121a21;--card:#1b2630;--line:#2c3a46;--muted:#9aaab6;--brand:#6aa5d1;--bar:#0b1117;--shadow-up:0 14px 28px rgb(0 0 0/.6)}
+}
+:root[data-theme="dark"]{--ink:#e8eef2;--paper:#121a21;--card:#1b2630;--line:#2c3a46;--muted:#9aaab6;--brand:#6aa5d1;--bar:#0b1117;--shadow-up:0 14px 28px rgb(0 0 0/.6)}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:"Segoe UI","Noto Sans",Arial,sans-serif;line-height:1.6;color:var(--ink);background:var(--paper);transition:background var(--t-base),color var(--t-base)}
+img,svg,video,iframe{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{width:min(1180px,100% - 2rem);margin-inline:auto}
+
+
+.loader{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:var(--paper);transition:opacity var(--t-base),visibility var(--t-base)}
+.loader.done{opacity:0;visibility:hidden}
+.spinner{width:48px;height:48px;border:5px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+
+.site-header{background:var(--brand);color:#fff;padding:1.5rem 0}
+.site-header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem}
+.brand{display:flex;align-items:center;gap:.8rem}
+.brand h1{margin:0;font-size:clamp(1.5rem,4vw,2.4rem);line-height:1.1}
+.theme-btn{padding:.5rem 1rem;min-height:44px;border:0;border-radius:var(--r-pill);background:var(--accent);color:#16222e;font:inherit;font-weight:700;cursor:pointer;transition:transform var(--t-fast)}
+.theme-btn:hover{transform:scale(1.05)}
+
+main{padding:2rem 0}
+h2{margin:0 0 1rem}
+
+
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.25rem;list-style:none;margin:0;padding:0}
+.gallery>li{opacity:0;animation:rise var(--t-base) var(--ease) forwards;animation-delay:calc(var(--i) * var(--stagger))}
+body.loading .gallery>li{animation-play-state:paused}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+
+.card{position:relative;border-radius:var(--r-md);background:var(--card);box-shadow:var(--shadow);transition:transform var(--t-base) var(--ease),box-shadow var(--t-base) var(--ease)}
+.card:hover,.card:focus-within{transform:translateY(-6px);box-shadow:var(--shadow-up)}
+
+
+.flip{perspective:1000px;aspect-ratio:4/3}
+.flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform var(--t-flip) var(--ease)}
+.card.is-flipped .flip-inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:var(--r-md);overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.front{background:var(--line)}
+.front img{width:100%;height:100%;object-fit:cover;transition:transform var(--t-base) var(--ease)}
+.card:hover .front img,.card:focus-within .front img{transform:scale(1.1)}
+.front figcaption{position:absolute;left:0;right:0;bottom:0;padding:.6rem .8rem;color:#fff;background:linear-gradient(transparent,rgb(0 0 0/.75))}
+.back{transform:rotateY(180deg);display:flex;flex-direction:column;justify-content:center;gap:.4rem;padding:1.2rem;background:var(--brand);color:#fff}
+.back h3{margin:0}
+.back dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.2rem .6rem}
+.back dt{opacity:.8}.back dd{margin:0}
+.flip-btn{position:absolute;right:.6rem;top:.6rem;z-index:2;min-width:44px;min-height:44px;border:0;border-radius:var(--r-pill);background:var(--accent);color:#16222e;font:inherit;font-weight:700;cursor:pointer}
+
+
+.media{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3rem}
+.media figure{margin:0}
+.media video,.media iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:var(--r-md);background:#000}
+.media figcaption{color:var(--muted);font-size:.9rem;margin-top:.4rem}
+
+footer{background:var(--bar);color:#cdd8df;padding:1.5rem 0;text-align:center}
+
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+  .gallery>li{opacity:1;animation:none}
+  .card:hover,.card:focus-within,.card:hover .front img,.card:focus-within .front img{transform:none}
+  .flip-inner{transform-style:flat}
+  .card.is-flipped .flip-inner{transform:none}
+  .back{transform:none;visibility:hidden}
+  .card.is-flipped .back{visibility:visible}
+  .card.is-flipped .front{visibility:hidden}
+}
+</style>
+</head>
+<body class="loading">
+
+<div class="loader" id="loader" role="status" aria-live="polite">
+  <div class="spinner"></div><span class="sr" style="position:absolute;left:-9999px">Ачаалж байна…</span>
+</div>
+
+<header class="site-header">
+  <div class="wrap">
+    <div class="brand">
+      <!-- inline SVG лого -->
+      <svg width="48" height="48" viewBox="0 0 48 48" role="img" aria-labelledby="logo-t">
+        <title id="logo-t">Зургийн цомог портал лого</title>
+        <rect x="3" y="9" width="42" height="32" rx="6" fill="#fff"/>
+        <circle cx="24" cy="25" r="9" fill="var(--brand)"/><circle cx="24" cy="25" r="4" fill="#e0a526"/>
+        <rect x="9" y="5" width="12" height="6" rx="2" fill="#e0a526"/>
+      </svg>
+      <h1>Зургийн цомог портал</h1>
+    </div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-pressed="false">🌙 Харанхуй горим</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <h2>Gallery</h2>
+  <ul class="gallery" id="gallery">
+    <li style="--i:0"><article class="card"><div class="flip"><div class="flip-inner">
+      <figure class="face front" style="margin:0"><img src="img/gobi.jpg" alt="Хонгорын элсний дов" width="640" height="480" loading="lazy"><figcaption>Хонгорын элс</figcaption></figure>
+      <div class="face back"><h3>Хонгорын элс</h3><dl><dt>Огноо</dt><dd>2026-07-12</dd><dt>Газар</dt><dd>Өмнөговь</dd></dl></div>
+    </div></div><button class="flip-btn" type="button" aria-label="Картыг эргүүлэх: Хонгорын элс" aria-pressed="false">↻</button></article></li>
+
+    <li style="--i:1"><article class="card"><div class="flip"><div class="flip-inner">
+      <figure class="face front" style="margin:0"><img src="img/khuvsgul.jpg" alt="Хөвсгөл нуурын эрэг" width="640" height="480" loading="lazy"><figcaption>Хөвсгөл нуур</figcaption></figure>
+      <div class="face back"><h3>Хөвсгөл нуур</h3><dl><dt>Огноо</dt><dd>2026-07-25</dd><dt>Газар</dt><dd>Хөвсгөл</dd></dl></div>
+    </div></div><button class="flip-btn" type="button" aria-label="Картыг эргүүлэх: Хөвсгөл нуур" aria-pressed="false">↻</button></article></li>
+
+    <li style="--i:2"><article class="card"><div class="flip"><div class="flip-inner">
+      <figure class="face front" style="margin:0"><img src="img/orkhon.jpg" alt="Орхон хөндийн хад" width="640" height="480" loading="lazy"><figcaption>Орхон хөндий</figcaption></figure>
+      <div class="face back"><h3>Орхон хөндий</h3><dl><dt>Огноо</dt><dd>2026-08-03</dd><dt>Газар</dt><dd>Өвөрхангай</dd></dl></div>
+    </div></div><button class="flip-btn" type="button" aria-label="Картыг эргүүлэх: Орхон хөндий" aria-pressed="false">↻</button></article></li>
+
+    <li style="--i:3"><article class="card"><div class="flip"><div class="flip-inner">
+      <figure class="face front" style="margin:0"><img src="img/altai.jpg" alt="Алтайн цасан нуруу" width="640" height="480" loading="lazy"><figcaption>Алтайн таван богд</figcaption></figure>
+      <div class="face back"><h3>Алтайн таван богд</h3><dl><dt>Огноо</dt><dd>2026-08-15</dd><dt>Газар</dt><dd>Баян-Өлгий</dd></dl></div>
+    </div></div><button class="flip-btn" type="button" aria-label="Картыг эргүүлэх: Алтайн таван богд" aria-pressed="false">↻</button></article></li>
+  </ul>
+
+  <section class="media" aria-label="Видео ба газрын зураг">
+    
+<figure>
+    <video controls preload="metadata"
+           poster="img/poster.jpg"
+           width="640" height="360">
+        <source src="vid/trip.mp4" type="video/mp4">
+    </video>
+    <figcaption>Аяллын богино видео.</figcaption>
+</figure>
+
+    <figure>
+      <iframe title="Улаанбаатар хотын газрын зураг" loading="lazy" referrerpolicy="no-referrer"
+        src="https://www.openstreetmap.org/export/embed.html?bbox=106.80%2C47.87%2C107.05%2C47.97&amp;layer=mapnik"></iframe>
+      <figcaption>Газрын зураг: Улаанбаатар (OpenStreetMap).</figcaption>
+    </figure>
+  </section>
+</main>
+
+<footer><div class="wrap">© 2026 Зургийн цомог портал · Лаб 6</div></footer>
+
+<script>
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('loader').classList.add('done');
+    document.body.classList.remove('loading');
+  },400);
+});
+
+document.getElementById('gallery').addEventListener('click',e=>{
+  const btn=e.target.closest('.flip-btn'); if(!btn) return;
+  const card=btn.closest('.card');
+  const on=card.classList.toggle('is-flipped');
+  btn.setAttribute('aria-pressed',on);
+});
+
+const root=document.documentElement, tbtn=document.getElementById('themeBtn');
+const sysDark=matchMedia('(prefers-color-scheme: dark)').matches;
+let theme=null; try{theme=localStorage.getItem('theme')}catch(e){}
+theme=theme||(sysDark?'dark':'light');
+function apply(t){root.dataset.theme=t;tbtn.setAttribute('aria-pressed',t==='dark');tbtn.textContent=t==='dark'?'☀️ Гэрэлтэй горим':'🌙 Харанхуй горим'}
+apply(theme);
+tbtn.addEventListener('click',()=>{theme=theme==='dark'?'light':'dark';apply(theme);try{localStorage.setItem('theme',theme)}catch(e){}});
+</script>
+</body>
+</html>
