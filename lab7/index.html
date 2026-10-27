@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Зургийн цомог портал — Лаб 7</title>
+<link rel="stylesheet" href="css/style.min.css">
+</head>
+<body class="is-loading">
+
+<div class="loader" id="loader" role="status" aria-live="polite">
+  <div class="loader__spinner"></div><span class="u-sr-only">Ачаалж байна…</span>
+</div>
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <div class="brand">
+      <svg class="brand__logo" width="48" height="48" viewBox="0 0 48 48" role="img" aria-labelledby="logo-t">
+        <title id="logo-t">Зургийн цомог портал лого</title>
+        <rect x="3" y="9" width="42" height="32" rx="6" fill="#fff"/>
+        <circle cx="24" cy="25" r="9" fill="var(--brand)"/><circle cx="24" cy="25" r="4" fill="#e0a526"/>
+        <rect x="9" y="5" width="12" height="6" rx="2" fill="#e0a526"/>
+      </svg>
+      <h1 class="brand__title">Зургийн цомог портал</h1>
+    </div>
+    <button class="btn btn--theme" id="themeBtn" type="button" aria-pressed="false">🌙 Харанхуй горим</button>
+  </div>
+</header>
+
+<main class="container">
+  <h2>Gallery</h2>
+  <ul class="gallery" id="gallery">
+    <li class="gallery__item" style="--i:0"><article class="card"><div class="card__flip"><div class="card__inner">
+      <figure class="card__face card__face--front"><img class="card__img" src="img/gobi.jpg" alt="Хонгорын элсний дов" width="640" height="480" loading="lazy"><figcaption class="card__caption">Хонгорын элс</figcaption></figure>
+      <div class="card__face card__face--back"><h3 class="card__title">Хонгорын элс</h3><dl class="card__meta"><dt class="card__term">Огноо</dt><dd class="card__desc">2026-07-12</dd><dt class="card__term">Газар</dt><dd class="card__desc">Өмнөговь</dd></dl></div>
+    </div></div><button class="btn btn--flip" type="button" aria-label="Картыг эргүүлэх: Хонгорын элс" aria-pressed="false">↻</button></article></li>
+    <li class="gallery__item" style="--i:1"><article class="card"><div class="card__flip"><div class="card__inner">
+      <figure class="card__face card__face--front"><img class="card__img" src="img/khuvsgul.jpg" alt="Хөвсгөл нуурын эрэг" width="640" height="480" loading="lazy"><figcaption class="card__caption">Хөвсгөл нуур</figcaption></figure>
+      <div class="card__face card__face--back"><h3 class="card__title">Хөвсгөл нуур</h3><dl class="card__meta"><dt class="card__term">Огноо</dt><dd class="card__desc">2026-07-25</dd><dt class="card__term">Газар</dt><dd class="card__desc">Хөвсгөл</dd></dl></div>
+    </div></div><button class="btn btn--flip" type="button" aria-label="Картыг эргүүлэх: Хөвсгөл нуур" aria-pressed="false">↻</button></article></li>
+    <li class="gallery__item" style="--i:2"><article class="card"><div class="card__flip"><div class="card__inner">
+      <figure class="card__face card__face--front"><img class="card__img" src="img/orkhon.jpg" alt="Орхон хөндийн хад" width="640" height="480" loading="lazy"><figcaption class="card__caption">Орхон хөндий</figcaption></figure>
+      <div class="card__face card__face--back"><h3 class="card__title">Орхон хөндий</h3><dl class="card__meta"><dt class="card__term">Огноо</dt><dd class="card__desc">2026-08-03</dd><dt class="card__term">Газар</dt><dd class="card__desc">Өвөрхангай</dd></dl></div>
+    </div></div><button class="btn btn--flip" type="button" aria-label="Картыг эргүүлэх: Орхон хөндий" aria-pressed="false">↻</button></article></li>
+    <li class="gallery__item" style="--i:3"><article class="card"><div class="card__flip"><div class="card__inner">
+      <figure class="card__face card__face--front"><img class="card__img" src="img/altai.jpg" alt="Алтайн цасан нуруу" width="640" height="480" loading="lazy"><figcaption class="card__caption">Алтайн таван богд</figcaption></figure>
+      <div class="card__face card__face--back"><h3 class="card__title">Алтайн таван богд</h3><dl class="card__meta"><dt class="card__term">Огноо</dt><dd class="card__desc">2026-08-15</dd><dt class="card__term">Газар</dt><dd class="card__desc">Баян-Өлгий</dd></dl></div>
+    </div></div><button class="btn btn--flip" type="button" aria-label="Картыг эргүүлэх: Алтайн таван богд" aria-pressed="false">↻</button></article></li>
+  </ul>
+
+  <section class="media" aria-label="Видео ба газрын зураг">
+    <figure class="media__item">
+      <video class="media__video" controls preload="metadata" poster="img/poster.jpg" width="640" height="360">
+        <source src="video/trip.mp4" type="video/mp4">
+        <track kind="captions" src="video/captions-mn.vtt" srclang="mn" label="Монгол" default>
+        Таны хөтөч видео дэмжихгүй байна.
+      </video>
+      <figcaption class="media__caption">Аяллын богино видео (монгол хадмалтай).</figcaption>
+    </figure>
+    <figure class="media__item">
+      <iframe class="media__frame" title="Улаанбаатар хотын газрын зураг" loading="lazy" referrerpolicy="no-referrer"
+        src="https://www.openstreetmap.org/export/embed.html?bbox=106.80%2C47.87%2C107.05%2C47.97&amp;layer=mapnik"></iframe>
+      <figcaption class="media__caption">Газрын зураг: Улаанбаатар (OpenStreetMap).</figcaption>
+    </figure>
+  </section>
+</main>
+
+<footer class="site-footer"><div class="container">© 2026 Зургийн цомог портал · Лаб 7</div></footer>
+
+<script>
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('loader').classList.add('loader--done');
+    document.body.classList.remove('is-loading');
+  },400);
+});
+document.getElementById('gallery').addEventListener('click',e=>{
+  const btn=e.target.closest('.btn--flip'); if(!btn) return;
+  const on=btn.closest('.card').classList.toggle('card--flipped');
+  btn.setAttribute('aria-pressed',on);
+});
+const root=document.documentElement, tbtn=document.getElementById('themeBtn');
+const sysDark=matchMedia('(prefers-color-scheme: dark)').matches;
+let theme=null; try{theme=localStorage.getItem('theme')}catch(e){}
+theme=theme||(sysDark?'dark':'light');
+function apply(t){root.dataset.theme=t;tbtn.setAttribute('aria-pressed',t==='dark');tbtn.textContent=t==='dark'?'☀️ Гэрэлтэй горим':'🌙 Харанхуй горим'}
+apply(theme);
+tbtn.addEventListener('click',()=>{theme=theme==='dark'?'light':'dark';apply(theme);try{localStorage.setItem('theme',theme)}catch(e){}});
+</script>
+</body>
+</html>

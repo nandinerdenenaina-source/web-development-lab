@@ -1,0 +1,15 @@
+@use "../abstracts" as *;
+
+@include reduced-motion {
+  *, *::before, *::after {
+    animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important;
+  }
+  .gallery__item { opacity: 1; animation: none; }
+  .card:hover, .card:focus-within,
+  .card:hover .card__img, .card:focus-within .card__img { transform: none; }
+  .card__inner { transform-style: flat; }
+  .card--flipped .card__inner { transform: none; }
+  .card__face--back { transform: none; visibility: hidden; }
+  .card--flipped .card__face--back { visibility: visible; }
+  .card--flipped .card__face--front { visibility: hidden; }
+}

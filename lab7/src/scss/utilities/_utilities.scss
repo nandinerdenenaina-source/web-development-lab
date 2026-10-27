@@ -1,0 +1,14 @@
+@use "../abstracts" as *;
+
+@each $name, $value in $colors {
+  .u-text-#{$name} { color: var(--#{$name}) !important; }
+  .u-bg-#{$name}   { background: var(--#{$name}) !important; }
+}
+@each $key, $val in $spacers {
+  .u-mt-#{$key} { margin-top: $val !important; }
+  .u-mb-#{$key} { margin-bottom: $val !important; }
+}
+@each $bp, $w in $breakpoints {
+  .u-hide-#{$bp}-up { @include respond($bp) { display: none !important; } }
+}
+.u-sr-only { position: absolute; left: -9999px; }

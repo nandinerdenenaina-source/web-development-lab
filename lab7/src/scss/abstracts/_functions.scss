@@ -1,0 +1,16 @@
+@use "sass:math";
+@use "sass:map";
+@use "sass:color";
+@use "tokens" as *;
+
+// px -> rem (суурь 16px)
+@function rem($px, $base: 16) { @return math.div($px, $base) * 1rem; }
+
+// token map-аас өнгө авах
+@function token($name) { @return map.get($colors, $name); }
+
+// Дэвсгэр өнгөнд тохирох бичгийн өнгийг автоматаар сонгоно
+@function contrast($bg, $dark: #16222e, $light: #fff) {
+  @if color.channel($bg, "lightness", $space: hsl) > 45% { @return $dark; }
+  @return $light;
+}

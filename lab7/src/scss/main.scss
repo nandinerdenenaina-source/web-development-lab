@@ -1,0 +1,13 @@
+// Орох цэг: @use-ийн дараалал = CSS-ийн дараалал
+@use "base/root";
+@use "base/base";
+@use "layout/container";
+@use "layout/header";
+@use "layout/footer";
+@use "components/loader";
+@use "components/btn";
+@use "components/gallery";
+@use "components/card";
+@use "components/media";
+@use "utilities/utilities";
+@use "base/motion"; // заавал хамгийн сүүлд

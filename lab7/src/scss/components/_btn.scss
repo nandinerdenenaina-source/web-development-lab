@@ -1,0 +1,10 @@
+@use "../abstracts" as *;
+
+.btn {
+  @include flex-center;
+  min-height: rem(44); border: 0; border-radius: var(--r-pill);
+  background: var(--accent); color: contrast(token(accent));
+  font: inherit; font-weight: 700; cursor: pointer;
+  &--theme { padding: .5rem 1rem; transition: transform var(--t-fast); &:hover { transform: scale(1.05); } }
+  &--flip  { position: absolute; right: .6rem; top: .6rem; z-index: 2; min-width: rem(44); }
+}

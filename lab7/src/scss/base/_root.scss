@@ -1,0 +1,12 @@
+@use "../abstracts" as *;
+
+:root {
+  @include theme-vars($colors, $shadows);
+  @each $k, $v in $radii     { --r-#{$k}: #{$v}; }
+  @each $k, $v in $durations { --t-#{$k}: #{$v}; }
+  --ease: #{$ease};
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@include dark-theme { @include theme-vars($colors-dark, $shadows-dark); }

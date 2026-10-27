@@ -1,0 +1,19 @@
+@use "sass:map";
+@use "tokens" as *;
+
+@mixin respond($bp) {
+  @media (min-width: map.get($breakpoints, $bp)) { @content; }
+}
+@mixin flex-center($direction: row) {
+  display: flex; align-items: center; justify-content: center; flex-direction: $direction;
+}
+@mixin reduced-motion { @media (prefers-reduced-motion: reduce) { @content; } }
+
+// Dark горим: системийн тохиргоо + гараар сонгосон тохиолдол хоёуланд ижил агуулга
+@mixin dark-theme {
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { @content; } }
+  :root[data-theme="dark"] { @content; }
+}
+@mixin theme-vars($maps...) {
+  @each $m in $maps { @each $k, $v in $m { --#{$k}: #{$v}; } }
+}
