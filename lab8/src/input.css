@@ -1,0 +1,13 @@
+@import "tailwindcss" source(none);
+@source "../tailwind.html";
+
+/* dark: variant-ийг html[data-theme="dark"]-д холбоно */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* Брэндийн токен: bg-brand, text-brand, bg-brand-dark... класс болно */
+@theme {
+  --color-brand: #e0a526;
+  --color-brand-dark: #c98f12;
+  --color-ink: #16222e;
+  --font-sans: "Segoe UI", "Noto Sans", Arial, sans-serif;
+}

@@ -1,0 +1,13 @@
+/* Bootstrap: .btn-brand — зөвхөн CSS variable-аар тодорхойлно */
+.btn-brand {
+  --bs-btn-color: #16222e;
+  --bs-btn-bg: #e0a526;
+  --bs-btn-border-color: #e0a526;
+  --bs-btn-hover-color: #16222e;
+  --bs-btn-hover-bg: #c98f12;
+  --bs-btn-hover-border-color: #c98f12;
+  --bs-btn-active-color: #16222e;
+  --bs-btn-active-bg: #b57f0e;
+  --bs-btn-active-border-color: #b57f0e;
+  --bs-btn-focus-shadow-rgb: 224, 165, 38;
+}
